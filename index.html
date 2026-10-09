@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6f7f4">
-  <meta name="description" content="Личный календарь ухода за кожей — каждый день, инструкции к средствам и мягкое введение Скинорена 15%.">
+  <meta name="description" content="ritual. 1.1 — календарь ухода за кожей с реальными фотографиями косметики.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="manifest" href="./manifest.webmanifest">
-  <title>ritual. — твой уход по дням</title>
+  
+  
+  <title>ritual. — уход за кожей</title>
   <style>
     :root{--bg:#f6f7f4;--paper:#fff;--ink:#24332c;--ink2:#45544b;--muted:#809087;--line:#e4ebe5;--green:#326c52;--green2:#e7f2eb;--mint:#d9ebe0;--lilac:#ede7f8;--purple:#7962a9;--amber:#fff1d9;--shadow:0 6px 24px rgba(34,57,44,.045);--r:22px;--serif:Georgia,'Times New Roman',serif}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:3px solid #a6d4ba;outline-offset:3px}svg{flex-shrink:0}a{color:inherit}::selection{background:#d1e6d8}
@@ -37,7 +39,227 @@
     .cal-day .num,.mini-month h3{color:#34483a}
     .routine-pct,.week-day .kicker,.day-tile .wd{color:#688072}
     .day-tile.selected .wd{color:#fff}
-    </style>
+
+    /* ritual. 1.1 — quiet editorial refinement. One surface system across views. */
+    :root{--shadow:0 2px 12px rgba(33,66,41,.024);--r:18px}
+    .card,.mini-month,.catalog-btn,.week-day{box-shadow:none}
+    .page-hero h1{font-size:clamp(32px,3.2vw,47px)}
+    .view-section{animation:enter .18s ease-out both}
+    .nav-btn,.mini-btn,.catalog-btn,.product-mini,.week-day,.cal-day{transition:background-color .18s,border-color .18s,color .18s}
+    .catalog-btn:hover,.mini-month:hover{transform:none}
+    .brandmark{box-shadow:none}
+    .brandname{letter-spacing:-1.4px}
+    .topline{margin-bottom:28px}
+    .test-ribbon{font-size:10px;font-weight:780;letter-spacing:.8px;text-transform:uppercase;color:var(--green);background:var(--green2);border-radius:7px;padding:6px 8px;white-space:nowrap}
+    .micro-actions{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin:-2px 0 18px}
+    .micro-actions .left{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+    .quiet-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink2);border-radius:11px;padding:11px 13px;font-size:12px;font-weight:740;min-height:40px}
+    .quiet-action:hover{border-color:var(--green)}
+    .quiet-action.active{background:var(--green2);border-color:#b9d1bf;color:var(--green)}
+    .micro-caption{font-size:11px;color:var(--muted)}
+    .journal-block{display:grid;gap:12px}
+    .metric-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid var(--line)}
+    .metric-row:first-child{border-top:0}
+    .metric-label{font-size:12px;color:var(--ink2);font-weight:650}
+    .metric-num{font-variant-numeric:tabular-nums;font-size:18px;font-weight:760}
+    .journal-summary{padding:22px}
+    .journal-summary h3{font-size:14px;margin:0 0 10px}
+    .journal-summary p{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 13px}
+    .journal-summary .quiet-action{width:100%}
+    .checkin-indicator{font-size:12px;color:var(--green);font-weight:750}
+    .journal-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(245px,.9fr);gap:18px;align-items:start}
+    .journal-card{padding:24px}
+    .chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}
+    .chart-head h2{font-size:16px;margin:0}
+    .chart-head p{font-size:12px;color:var(--muted);line-height:1.45;margin:7px 0 0}
+    .chart-svg{width:100%;height:auto;display:block;overflow:visible}
+    .chart-key{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
+    .chart-key::before{content:'';width:17px;height:3px;border-radius:4px;background:var(--green)}
+    .journal-log{display:grid;gap:0}
+    .journal-log button{padding:13px 0;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:13px;text-align:left}
+    .journal-log button:last-child{border-bottom:0}
+    .journal-log .d{font-size:12px;font-weight:750}
+    .journal-log .m{font-size:11px;color:var(--muted);margin-top:3px}
+    .journal-empty{padding:26px 15px;text-align:center;font-size:12px;line-height:1.65;color:var(--muted)}
+    .wellness-bars{display:grid;gap:15px;margin-top:12px}
+    .wellness-row{display:grid;grid-template-columns:1fr 35px;gap:6px 12px;align-items:center;font-size:12px;color:var(--ink2)}
+    .wellness-row .meter{grid-column:1/-1;height:5px;border-radius:20px;background:var(--line);overflow:hidden}
+    .wellness-row .meter i{display:block;height:100%;background:var(--green);border-radius:20px}
+    .wellness-row b{text-align:right;font-size:12px}
+    .form-line{padding:15px 0;border-bottom:1px solid var(--line)}
+    .form-line:last-of-type{border:0}
+    .form-line label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;color:var(--ink);font-size:13px;font-weight:650}
+    .form-line output{font-size:14px;color:var(--green);font-weight:800;font-variant-numeric:tabular-nums}
+    .form-line input[type=range]{width:100%;accent-color:var(--green);height:26px}
+    .field-hint{font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.5}
+    .notes-area{width:100%;min-height:88px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.5}
+    .modal-tabs{display:flex;gap:7px;margin:0 0 16px;border-bottom:1px solid var(--line);padding-bottom:9px}
+    .modal-tab{border:0;background:transparent;border-radius:9px;padding:10px;color:var(--muted);font-size:12px;font-weight:750}
+    .modal-tab.active{background:var(--green2);color:var(--green)}
+    .compat-list{list-style:none!important;padding:0!important;margin:10px 0 0!important}
+    .compat-list li{margin:0!important;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.6}
+    .stock-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}
+    .stock-wrap button{border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--muted);padding:9px 11px;font-size:11px;font-weight:720}
+    .stock-wrap button.active{color:var(--green);background:var(--green2);border-color:#b1d1b7}
+    .modal-leadline{display:flex;gap:9px;align-items:center;margin:8px 0 20px;color:var(--muted);font-size:11px}
+    .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0}
+    .stat{border:1px solid var(--line);padding:14px 12px;border-radius:12px;min-width:0}
+    .stat strong{font-size:20px;display:block;font-weight:720;font-variant-numeric:tabular-nums;color:var(--ink)}
+    .stat small{display:block;font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4}
+    .simple-alert{border-left:2px solid var(--green);background:var(--green2);padding:12px 15px;border-radius:3px 10px 10px 3px;color:var(--ink2);font-size:12px;line-height:1.5;margin:12px 0}
+    .mode-note{font-size:12px;line-height:1.6;margin:0;color:var(--ink2)}
+    .theme-select{display:block;width:100%;font-size:14px;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+    .modal-action{min-height:43px}
+    .day-strip{margin-bottom:18px}
+    .dark-theme-note{display:none}
+    html[data-theme=dark]{--bg:#151c18;--paper:#1d2721;--ink:#eaf1ea;--ink2:#c5d5ca;--muted:#9cac9f;--line:#334237;--green:#9bc6a9;--green2:#2a4232;--mint:#254632;--lilac:#3f344b;--purple:#ceb7f0;--amber:#473821;--shadow:none;color-scheme:dark}
+    html[data-theme=dark] .side{background:#17211b}
+    html[data-theme=dark] .nav-btn{color:#b0c4b5}
+    html[data-theme=dark] .nav-btn.active,html[data-theme=dark] .nav-btn:hover{background:#294032;color:var(--green)}
+    html[data-theme=dark] .brandmark{background:#466953;color:white}
+    html[data-theme=dark] .brandname span{color:#afd0b6}
+    html[data-theme=dark] .side-note,html[data-theme=dark] .tip-card,html[data-theme=dark] .small-note{background:#223228;border-color:var(--line);color:var(--ink2)}
+    html[data-theme=dark] .side-note .title,html[data-theme=dark] .tip-card h4,html[data-theme=dark] .page-hero h1,html[data-theme=dark] .stage-big{color:var(--ink)}
+    html[data-theme=dark] .page-hero p,html[data-theme=dark] .overview p,html[data-theme=dark] .routine-title small,html[data-theme=dark] .prod-short,html[data-theme=dark] .hint-text,html[data-theme=dark] .stage-advice,html[data-theme=dark] .stage-caption,html[data-theme=dark] .tip-card p,html[data-theme=dark] .small-note,html[data-theme=dark] .routine-foot,html[data-theme=dark] .phase-card p{color:var(--muted)}
+    html[data-theme=dark] .mini-btn,html[data-theme=dark] .quiet-action,html[data-theme=dark] .week-day,html[data-theme=dark] .mini-month,html[data-theme=dark] .catalog-btn,html[data-theme=dark] .cal-day,html[data-theme=dark] .info-tile,html[data-theme=dark] .settings-input,html[data-theme=dark] .modal,html[data-theme=dark] .modal-action.secondary{background:var(--paper);border-color:var(--line);color:var(--ink)}
+    html[data-theme=dark] .day-tile.selected{color:#fff;background:#436d51}
+    html[data-theme=dark] .day-tile.selected .wd{color:#fff}
+    html[data-theme=dark] .progress-circle:before{background:var(--paper)}
+    html[data-theme=dark] .routine-foot,html[data-theme=dark] .cal-day.selected,html[data-theme=dark] .cal-day:hover{background:#27372c;color:var(--ink)}
+    html[data-theme=dark] .cal-day.in-past{background:var(--paper)}
+    html[data-theme=dark] .cal-day .num,html[data-theme=dark] .mini-month h3,html[data-theme=dark] .routine-pct{color:var(--ink2)}
+    html[data-theme=dark] .step,html[data-theme=dark] .product-mini,html[data-theme=dark] .week-line{border-color:var(--line)}
+    html[data-theme=dark] .tag,html[data-theme=dark] .tag.opt{background:#2a3b30;color:#b7d2bd}
+    html[data-theme=dark] .tag.skin{background:#42374c;color:#d9c8ed}
+    html[data-theme=dark] .done-check{background:transparent;border-color:#52695a}
+    html[data-theme=dark] .done-check.checked{background:#4d8a62;color:white}
+    html[data-theme=dark] .phase-chip,html[data-theme=dark] .product-ico{background:#2a4133;color:var(--green)}
+    html[data-theme=dark] .routine-emblem,html[data-theme=dark] .routine-emblem.night{background:#29382f;color:#bbd5c0}
+    html[data-theme=dark] .modal .lead,html[data-theme=dark] .modal li,html[data-theme=dark] .info-tile span{color:var(--ink2)}
+    html[data-theme=dark] .modal .close{background:#304335;color:var(--ink)}
+    html[data-theme=dark] .modal .warning,html[data-theme=dark] .notice.warm{background:#382f26;color:#e3cda7;border-color:#564633}
+    html[data-theme=dark] .notice,html[data-theme=dark] .notice.success{background:#283b30;color:#d0e0d3;border-color:var(--line)}
+    html[data-theme=dark] .mobile-nav{background:rgba(26,37,29,.96);border-color:var(--line)}
+    html[data-theme=dark] .test-ribbon{color:#b3d8be}
+    html[data-theme=dark] .catalog-btn h3,html[data-theme=dark] .product-mini h4,html[data-theme=dark] .chart-head h2{color:#eaf1ea}
+    html[data-theme=dark] .catalog-btn p,html[data-theme=dark] .catalog-btn .status,html[data-theme=dark] .product-mini p,html[data-theme=dark] .week-info{color:#aebfb1}
+    html[data-theme=dark] .day-tile:not(.selected),html[data-theme=dark] .sidebar-settings{color:#b1c4b6}
+    @media(max-width:990px){.mobile-nav button{min-height:48px}.micro-actions{margin:0 0 14px}}
+    @media(max-width:740px){.journal-grid{grid-template-columns:1fr}.journal-card{padding:20px}.stat-grid{gap:7px}.stat{padding:12px 9px}.stat strong{font-size:18px}.micro-actions{align-items:stretch}.micro-actions .left{width:100%}.micro-caption{display:none}.quiet-action{flex-grow:1}.modal-tabs{flex-wrap:wrap}.mobile-nav button{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.view-section{animation:none!important}}
+
+    
+/* ritual. 1.1 product photography: original interface with consistent neutral packshots */
+.product-ico.has-photo{background:#fff!important;color:var(--green);padding:4px;overflow:hidden;border:1px solid #e9eee9;border-radius:11px;box-shadow:none}
+.product-ico.has-photo img{width:100%;height:100%;object-fit:contain;display:block;mix-blend-mode:multiply}
+.product-ico.has-photo .fallback-abbr{display:none}
+.product-ico.has-photo.missing-photo{background:#eef4ec!important}
+.product-ico.has-photo.missing-photo img{display:none}
+.product-ico.has-photo.missing-photo .fallback-abbr{display:block;font-weight:800;font-size:12px}
+.step>.product-ico{width:39px;height:47px;flex:0 0 39px}
+.product-mini .product-ico{width:43px;height:48px}
+.catalog-btn .product-ico{width:72px;height:88px;flex:0 0 72px;border-radius:13px}
+.product-hero{display:grid;grid-template-columns:148px minmax(0,1fr);gap:19px;align-items:center;margin:2px 0 18px}
+.product-hero-picture{background:#fff;border:1px solid var(--line);border-radius:18px;min-height:160px;display:grid;place-items:center;padding:8px}
+.modal .product-hero-picture .product-ico.photo-large{width:100%;height:150px;border:none;border-radius:0;padding:0}
+.product-hero-info{min-width:0}
+.product-hero-info .eyebrow2{font-size:10px;letter-spacing:.7px}
+.product-hero-info .photo-marker{font-weight:800;font-size:12px;margin:9px 0;color:var(--ink)}
+.product-hero-info p{font-size:11px;line-height:1.55;margin:0 0 10px;color:var(--muted)}
+.product-hero-info a{font-size:11px;line-height:1.5;color:var(--green);text-decoration:underline;text-underline-offset:3px}
+html[data-theme=dark] .product-ico.has-photo{border-color:#354639;background:#fff!important}
+html[data-theme=dark] .product-hero-picture{border-color:#354639;background:#fff}
+@media(max-width:430px){.step>.product-ico{width:34px;height:42px;flex-basis:34px}.product-hero{grid-template-columns:122px minmax(0,1fr);gap:12px}.modal .product-hero-picture .product-ico.photo-large{height:135px}.product-hero-info p{font-size:10px}.catalog-btn .product-ico{width:65px;height:82px;flex-basis:65px}}
+
+  
+/* ritual. 1.1 · layout repair — keep the original quiet design language */
+/* Every step has four deliberate columns (number / packshot / text / checkbox). */
+.step{grid-template-columns:23px 42px minmax(0,1fr) 36px;gap:11px;min-width:0;align-items:center}
+.stepnum{align-self:center;font-variant-numeric:tabular-nums}
+.step-details,.step-open,.product-mini>span:not(.product-ico),.catalog-btn>span:not(.product-ico){min-width:0}
+.step-open{width:100%;overflow-wrap:anywhere}
+.step>.product-ico,.step>.water-mark{width:42px;height:51px;flex:0 0 42px;border-radius:11px}
+.step .prod-name{display:block;font-size:13px;overflow-wrap:anywhere}
+.step .prod-short{display:block;overflow-wrap:anywhere}
+.step .done-check{justify-self:end;width:32px;height:32px}
+.product-ico.water-mark{border:1px solid var(--line);color:#658d7a;background:#f0f5f1;font-size:10px;font-weight:780}
+/* Product images reveal only once loaded; otherwise branded labels are visible. */
+.product-ico.has-photo{position:relative;display:grid;place-items:center;isolation:isolate;overflow:hidden;background:#f0f5f1!important;border:1px solid #e5ece6;padding:0}
+.product-ico.has-photo .fallback-abbr{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;font-weight:760;letter-spacing:-.2px;color:#4c7762;font-size:clamp(11px,1vw,14px);opacity:1;transition:opacity .18s ease}
+.product-ico.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:normal;background:#fff;display:block;opacity:0;transition:opacity .2s ease}
+.product-ico.has-photo.is-loaded{background:#fff!important}
+.product-ico.has-photo.is-loaded img{opacity:1}
+.product-ico.has-photo.is-loaded .fallback-abbr{opacity:0}
+.product-ico.has-photo.missing-photo img{display:none}
+.product-ico.has-photo.type-skinoren{background:#f8f0e7!important;border-color:#f0e5da}
+.product-ico.has-photo.type-skinoren .fallback-abbr{color:#aa6b38}
+.product-ico.has-photo.type-axis,.product-ico.has-photo.type-enzyme{background:#f3f0f7!important;border-color:#ece7f2}
+.product-ico.has-photo.type-axis .fallback-abbr,.product-ico.has-photo.type-enzyme .fallback-abbr{color:#826d9c}
+.product-ico.has-photo.type-dokdo{background:#eff5f7!important;border-color:#e4ecef}
+.product-ico.has-photo.type-dokdo .fallback-abbr{color:#688a9d}
+.product-ico.has-photo.type-toner{background:#f1f3f6!important;border-color:#e6e9ef}
+.product-mini{width:100%;min-width:0}
+.product-mini h4,.catalog-btn h3{overflow-wrap:anywhere}
+.catalog-btn{min-width:0;align-items:center;gap:14px;padding:16px 17px}
+.catalog-btn .product-ico{width:66px;height:78px;flex:0 0 66px;border-radius:12px}
+.catalog-btn p{line-height:1.45}
+/* A single structured hero, never text over an image or over the close control. */
+.modal-backdrop{animation:none;overscroll-behavior:contain;padding:16px;align-items:center}
+.modal{width:min(100%,540px);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:28px;border-radius:20px}
+.modal .close{z-index:3;top:16px;right:16px}
+.product-hero{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center;margin:0 42px 19px 0}
+.product-hero-picture{min-height:145px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.modal .product-hero-picture .product-ico.photo-large{width:100%;height:132px;border:0;border-radius:10px;padding:0}
+.modal .product-hero-picture .product-ico.photo-large .fallback-abbr{font-size:25px}
+.product-hero-info{min-width:0;overflow-wrap:anywhere}
+.product-hero-info .eyebrow2{letter-spacing:.9px;font-size:10px}
+.product-hero-info .photo-marker{font-size:12px;line-height:1.35;margin:8px 0 6px}
+.product-hero-info p{font-size:11px;line-height:1.45;margin:0 0 7px}
+.product-hero-info a{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.modal h2{overflow-wrap:anywhere}
+/* Consistent dark surfaces: never bright patches unless actual packshot is loaded. */
+html[data-theme=dark] .product-ico.has-photo{background:#283b30!important;border-color:#3a4f40}
+html[data-theme=dark] .product-ico.has-photo .fallback-abbr{color:#b6d8bd}
+html[data-theme=dark] .product-ico.has-photo.type-skinoren{background:#40352a!important;border-color:#554635}
+html[data-theme=dark] .product-ico.has-photo.type-skinoren .fallback-abbr{color:#ecc28e}
+html[data-theme=dark] .product-ico.has-photo.type-dokdo{background:#283d45!important;border-color:#38535b}
+html[data-theme=dark] .product-ico.has-photo.type-dokdo .fallback-abbr{color:#a8cddb}
+html[data-theme=dark] .product-ico.has-photo.type-axis,html[data-theme=dark] .product-ico.has-photo.type-enzyme{background:#393246!important;border-color:#51475a}
+html[data-theme=dark] .product-ico.has-photo.type-axis .fallback-abbr,html[data-theme=dark] .product-ico.has-photo.type-enzyme .fallback-abbr{color:#d6c3e5}
+html[data-theme=dark] .product-ico.has-photo.is-loaded{background:#fff!important}
+html[data-theme=dark] .product-hero-picture{background:var(--paper);border-color:var(--line)}
+html[data-theme=dark] .product-ico.water-mark{background:#28382d;color:#a4cdb1;border-color:var(--line)}
+/* Mobile rhythm, avoid full-width text squeeze and chrome overlap. */
+@media(max-width:740px){
+ .modal{padding:23px 20px 26px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px)}
+ .topline{gap:10px}.topline .eyebrow{min-width:0;flex-wrap:wrap;gap:6px}
+ .catalog-btn{padding:15px;min-height:110px}
+ .catalog-btn .product-ico{width:58px;height:70px;flex:0 0 58px}
+ .step{grid-template-columns:20px 38px minmax(0,1fr) 33px;gap:9px;padding:13px 0}
+ .step>.product-ico,.step>.water-mark{width:38px;height:47px;flex-basis:38px}
+ .routine{padding:19px 17px}
+ .product-hero{grid-template-columns:108px minmax(0,1fr);gap:12px;margin-right:23px}
+ .product-hero-picture{min-height:128px;padding:5px}
+ .modal .product-hero-picture .product-ico.photo-large{height:115px}
+ .product-hero-info p{font-size:10px}
+}
+@media(max-width:355px){
+ .step{grid-template-columns:18px 34px minmax(0,1fr) 30px;gap:7px}
+ .step>.product-ico,.step>.water-mark{width:34px;height:43px;flex-basis:34px}
+ .step .prod-name{font-size:12px}
+ .step .prod-short{font-size:10px}
+ .routine{padding:16px 13px}
+ .product-hero{grid-template-columns:90px minmax(0,1fr);gap:9px;margin-right:20px}
+ .modal .product-hero-picture .product-ico.photo-large{height:105px}
+ .product-hero-picture{min-height:118px}
+ .product-hero-info .eyebrow2{font-size:9px}
+ .modal{padding:18px 14px 22px}
+ .info-grid{grid-template-columns:1fr}
+ .catalog-btn{gap:11px}
+}
+@media(prefers-reduced-motion:reduce){.product-ico.has-photo img,.product-ico.has-photo .fallback-abbr{transition:none}}
+
+  </style>
 </head>
 <body>
   <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -56,17 +278,22 @@
     <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12 3a2 2 0 0 1 2 2v.3a7 7 0 0 1 2.1.9l.2-.2a2 2 0 0 1 2.8 2.8l-.2.2a7 7 0 0 1 .9 2.1h.3a2 2 0 0 1 0 4h-.3a7 7 0 0 1-.9 2.1l.2.2a2 2 0 0 1-2.8 2.8l-.2-.2a7 7 0 0 1-2.1.9v.3a2 2 0 0 1-4 0v-.3a7 7 0 0 1-2.1-.9l-.2.2a2 2 0 0 1-2.8-2.8l.2-.2a7 7 0 0 1-.9-2.1H5a2 2 0 0 1 0-4h.3a7 7 0 0 1 .9-2.1l-.2-.2a2 2 0 0 1 2.8-2.8l.2.2a7 7 0 0 1 2.1-.9V5a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+
+    <symbol id="i-journal" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 3v18m4-13h4m-4 4h4m-4 4h3"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1"/><circle cx="10" cy="11" r="1"/><circle cx="14" cy="14" r="1"/><circle cx="19" cy="6" r="1"/></symbol>
+    <symbol id="i-simplify" viewBox="0 0 24 24"><path d="M5 7h14M5 12h9M5 17h6"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h16M5 16 16 5l3 3-11 11H5v-3ZM14 7l3 3"/></symbol>
   </defs></svg>
   <div class="app">
     <aside class="side">
       <div class="brand"><div class="brandmark"><svg viewBox="0 0 24 24"><use href="#i-leaf"/></svg></div><div><div class="brandname">ritual<span>.</span></div><div class="brand-sub">твоя кожа, твой ритм</div></div></div>
       <div><div class="nav-label">Календарь</div><nav class="nav" aria-label="Навигация"><button class="nav-btn active" data-view="day"><span class="icon"><svg><use href="#i-day"/></svg></span>Сегодня</button><button class="nav-btn" data-view="week"><span class="icon"><svg><use href="#i-week"/></svg></span>Неделя</button><button class="nav-btn" data-view="month"><span class="icon"><svg><use href="#i-month"/></svg></span>Месяц</button><button class="nav-btn" data-view="year"><span class="icon"><svg><use href="#i-year"/></svg></span>Год</button></nav></div>
-      <div><div class="nav-label">Твой уход</div><nav class="nav"><button class="nav-btn" data-view="plan"><span class="icon"><svg><use href="#i-leaf"/></svg></span>Этапы программы</button><button class="nav-btn" data-view="products"><span class="icon"><svg><use href="#i-box"/></svg></span>Мои средства</button></nav></div>
+      <div><div class="nav-label">Твой уход</div><nav class="nav"><button class="nav-btn" data-view="plan"><span class="icon"><svg><use href="#i-leaf"/></svg></span>Этапы программы</button><button class="nav-btn" data-view="journal"><span class="icon"><svg><use href="#i-journal"/></svg></span>Дневник кожи</button><button class="nav-btn" data-view="products"><span class="icon"><svg><use href="#i-box"/></svg></span>Мои средства</button></nav></div>
       <div class="side-bottom"><div class="side-note"><span class="icon large"><svg><use href="#i-leaf"/></svg></span><div class="title">Мягче — значит лучше</div><p>Никакого лишнего отшелушивания. Один новый актив за раз, постепенный переход и внимание к ощущениям.</p></div><button class="side-settings" data-action="settings"><span class="icon"><svg><use href="#i-gear"/></svg></span>Настройки программы</button></div>
     </aside>
     <main class="main" id="main-content" aria-live="polite"></main>
   </div>
-  <nav class="mobile-nav" aria-label="Мобильное меню"><button class="active" data-view="day"><span class="icon"><svg><use href="#i-day"/></svg></span>День</button><button data-view="week"><span class="icon"><svg><use href="#i-week"/></svg></span>Неделя</button><button data-view="month"><span class="icon"><svg><use href="#i-month"/></svg></span>Месяц</button><button data-view="year"><span class="icon"><svg><use href="#i-year"/></svg></span>Год</button><button data-view="plan"><span class="icon"><svg><use href="#i-leaf"/></svg></span>Этапы</button></nav>
+  <nav class="mobile-nav" aria-label="Мобильное меню"><button class="active" data-view="day"><span class="icon"><svg><use href="#i-day"/></svg></span>День</button><button data-view="week"><span class="icon"><svg><use href="#i-week"/></svg></span>Неделя</button><button data-view="month"><span class="icon"><svg><use href="#i-month"/></svg></span>Месяц</button><button data-view="journal"><span class="icon"><svg><use href="#i-journal"/></svg></span>Дневник</button><button data-view="products"><span class="icon"><svg><use href="#i-box"/></svg></span>Средства</button></nav>
   <div id="modal-root"></div>
 <script>
 'use strict';
@@ -87,10 +314,11 @@ const fullDate=d=>`${cap(days[dow(d)])}, ${d.getDate()} ${months[d.getMonth()]}`
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 const dateValid=s=>/^\d{4}-\d{2}-\d{2}$/.test(s)&&iso(parse(s))===s;
 const today=()=>new Date();
-const storeKey='ritual-skincare-v1';
-let stored={};try{stored=JSON.parse(localStorage.getItem(storeKey)||'{}')||{}}catch(e){}
-const state={view:'day',selected:today(),startDate:dateValid(stored.startDate)?stored.startDate:iso(today()),done:stored.done&&typeof stored.done==='object'?stored.done:{},approved:stored.approved&&typeof stored.approved==='object'?stored.approved:{},modal:null, scrollPosition:0};
-const save=()=>{try{localStorage.setItem(storeKey,JSON.stringify({startDate:state.startDate,done:state.done,approved:state.approved}))}catch(e){}};
+const storeKey='ritual-skincare-v11';
+const previousStoreKey='ritual-skincare-v1';
+let stored={};try{const saved=localStorage.getItem(storeKey)||localStorage.getItem(previousStoreKey);stored=saved?JSON.parse(saved)||{}:{}}catch(e){}
+const state={view:'day',selected:today(),startDate:dateValid(stored.startDate)?stored.startDate:iso(today()),done:stored.done&&typeof stored.done==='object'?stored.done:{},approved:stored.approved&&typeof stored.approved==='object'?stored.approved:{},journal:stored.journal&&typeof stored.journal==='object'?stored.journal:{},minimalDays:stored.minimalDays&&typeof stored.minimalDays==='object'?stored.minimalDays:{},stock:stored.stock&&typeof stored.stock==='object'?stored.stock:{},theme:['system','light','dark'].includes(stored.theme)?stored.theme:'system',modal:null, scrollPosition:0};
+const save=()=>{try{localStorage.setItem(storeKey,JSON.stringify({startDate:state.startDate,done:state.done,approved:state.approved,journal:state.journal,minimalDays:state.minimalDays,stock:state.stock,theme:state.theme}))}catch(e){}};
 const PRODUCTS={
  water:{name:'Вода',short:'Мягкое умывание',abbr:'H₂O',tone:'blue',group:'Очищение',status:'Ежедневно',desc:'Утром достаточно воды, если кожа после пенки стягивается и нет необходимости в дополнительном очищении.',amount:'Немного прохладной или слегка тёплой воды',skin:'Без косметики',steps:['Смочи лицо слегка тёплой водой.','Не используй жёсткие щётки и не растирай кожу.','Аккуратно промокни полотенцем, оставив кожу слегка влажной для увлажняющего ухода.'],caution:'Если утром кожа сильно загрязнена или есть особые рекомендации дерматолога, можно использовать мягкую пенку.'},
  balm:{name:'Dr. Althea Pure Grinding Cleansing Balm',short:'Снятие SPF · первый этап очищения',abbr:'DA',tone:'blue',group:'Очищение',status:'Вечером при SPF',desc:'Растворяет солнцезащитное средство, макияж и стойкие загрязнения. Не лечит акне, но помогает бережно снять SPF.',amount:'Небольшая порция, достаточная для всего лица',skin:'Сухие руки и сухое лицо',steps:['Нанеси бальзам сухими руками на сухую кожу.','Бережно массируй 30–60 секунд, без трения и давления.','Добавь немного воды, дождись молочной эмульсии.','Тщательно смой и переходи к одной пенке.'],caution:'Если SPF не наносился, двойное очищение не всегда обязательно.'},
@@ -104,6 +332,39 @@ const PRODUCTS={
  enzyme:{name:'By Wishtrend Green Tea & Enzyme Powder Wash',short:'Энзимная пудра',abbr:'BW',tone:'violet',group:'Дополнительный уход',status:'Пауза на время введения',desc:'Дополнительное отшелушивающее очищение. При введении Скинорена не является необходимым этапом.',amount:'Небольшая порция по инструкции',skin:'Смоченная водой',steps:['Смешай небольшую порцию порошка с водой, чтобы получить пену.','Аккуратно распредели по влажной коже без скрабирования.','Смой. Используй вместо обычной пенки, а не после неё.'],caution:'Не использовать первые 4 недели с начала введения Скинорена. Если позже возвращать — максимум раз в неделю, в отдельный вечер, при отсутствии раздражения; включение в расписание вручную обсуди с дерматологом.'},
  toner:{name:'Aronyx Toner',short:'Тонер · формула не уточнена',abbr:'AR',tone:'blue',group:'Дополнительный уход',status:'Пауза до уточнения состава',desc:'Точное название и INCI твоего Aronyx пока неизвестны, поэтому нельзя надёжно оценить совместимость со Скинореном.',amount:'По инструкции на упаковке',skin:'Зависит от формулы',steps:['Сначала проверь полное название тонера и список ингредиентов.','Если это обычный увлажняющий тонер без кислот, его можно использовать между очищением и сывороткой.','Если содержит AHA/BHA/PHA или другие активы — потребуется отдельная схема.'],caution:'Не включён в расписание до уточнения состава.'}
 };
+
+const PRODUCT_PHOTOS={
+  balm:{url:'https://yeppo.cl/cdn/shop/files/Althea-0071_1200x1200.jpg?v=1767612156',source:'Yeppo — Dr. Althea',href:'https://yeppo.cl/products/pure-grinding-cleansing-balm-50g',unverified:false},
+  dokdo:{url:'https://static.wixstatic.com/media/73892d_16257543259b4bcbaf616a247bd330d7~mv2.png/v1/fill/w_1352%2Ch_1344%2Cal_c%2Cq_90%2Cenc_avif%2Cquality_auto/73892d_16257543259b4bcbaf616a247bd330d7~mv2.png',source:'Skinderella — Round Lab',href:'https://www.skinderella.co/product-page/round-lab-1025-dokdo',unverified:false},
+  pine:{url:'https://helloskin.hu/img/26649/205056/205056.webp',source:'HelloSkin — Round Lab',href:'https://helloskin.hu/Round-Lab-Pine-Calming-Cica-Cleanser-Arclemoso-Gel',unverified:false},
+  torriden:{url:'https://medias.watsons.com.sg/publishing/WTCSG-95930-front-zoom.jpg?version=1759515018',source:'Watsons — Torriden',href:'https://www.watsons.com.sg/torriden-balanceful-control-serum-50ml/p/BP_95930',unverified:false},
+  axis:{url:'https://othoimart.com/cdn/shop/files/32270424201-1_XL.jpg?v=1748459282&width=1200',source:'OthoiMart — Axis-Y',href:'https://othoimart.com/products/axis-y-dark-spot-correcting-glow-serum-50ml',unverified:false},
+  cream:{url:'https://hbytala.com/cdn/shop/files/Vita-Niacinamide-Dark-Spot-Cream-ROUND-LAB.jpg?v=1757410454&width=1000',source:'Hbytala — Round Lab',href:'https://hbytala.com/products/vita-niacinamide-dark-spot-cream',unverified:false},
+  sunscreen:{url:'https://hbytala.com/cdn/shop/files/Pine-Calming-Cica-Sunscreen-ROUND-LAB.jpg?v=1757410476&width=1200',source:'Hbytala — Round Lab',href:'https://hbytala.com/products/roundlab-pine-calming-cica-sunscreen',unverified:false},
+  skinoren:{url:'https://saybol.kz/media/products/6586/conversions/teaser.jpg',source:'Saybol — Скинорен',href:'https://saybol.kz/ru/product/skinoren-15-15-g-gel-d-lica-d-probl-kozhi',unverified:false},
+  enzyme:{url:'https://media.myaster.com/images/products/1069205/by-wishtrend-green-tea-enzyme-powder-face-wash-110g/1069205-1.jpg?fit=bounds&width=840',source:'myAster — By Wishtrend',href:'https://www.myaster.com/en/online-pharmacy/p/by-wishtrend-green-tea-enzyme-powder-face-wash-110g/1069205',unverified:false},
+  toner:{url:'https://www.dodoskin.com/cdn/shop/files/382_956af963-8b85-4b29-a08e-3068513b4395.png?v=1698116582',source:'DodoSkin — ARONYX',href:'https://www.dodoskin.com/products/mediflower-aronyx-hyaluronic-acid-toner-500ml',unverified:true}
+};
+function productImage(id, variant='small'){
+ const p=PRODUCTS[id];if(!p)return '';
+ const pic=PRODUCT_PHOTOS[id];if(!pic)return `<span class="product-ico ${p.tone==='blue'?'blue':''}">${esc(p.abbr)}</span>`;
+ return `<span class="product-ico has-photo type-${esc(id)} ${variant==='large'?'photo-large':''} ${pic.unverified?'photo-unverified':''}" aria-label="${esc(p.name)}"><span class="fallback-abbr" aria-hidden="true">${esc(p.abbr)}</span><img src="${esc(pic.url)}" alt="" loading="${variant==='large'?'eager':'lazy'}" decoding="async" referrerpolicy="no-referrer"></span>`;
+}
+function productPhotoHero(id){
+ const p=PRODUCTS[id],pic=PRODUCT_PHOTOS[id];if(!pic)return productImage(id,'large');
+ return `<div class="product-hero"><div class="product-hero-picture">${productImage(id,'large')}</div><div class="product-hero-info"><span class="eyebrow2">${esc(p.group)}</span><div class="photo-marker">${pic.unverified?'Упаковка не подтверждена':'Фото товара'}</div><p>${pic.unverified?'Для Aronyx точная версия не установлена — сверь название на флаконе.':'Если снимок недоступен, показывается нейтральная подпись средства.'}</p><a href="${esc(pic.href)}" target="_blank" rel="noopener noreferrer">Открыть фото ↗</a></div></div>`;
+}
+document.addEventListener('load',e=>{
+ const img=e.target;if(img instanceof HTMLImageElement && img.closest('.product-ico.has-photo')){
+   if(img.naturalWidth>0)img.closest('.product-ico').classList.add('is-loaded');
+ }
+},true);
+document.addEventListener('error',e=>{
+ const img=e.target;if(img instanceof HTMLImageElement && img.closest('.product-ico.has-photo')){
+   img.closest('.product-ico').classList.add('missing-photo');
+ }
+},true);
+
 const stages=[
  {from:0,to:6,short:'Неделя 1',name:'Упростить уход',description:'Вода утром, SPF, вечером бальзам при SPF, одна пенка и немного крема. Без кислот, Axis-Y и энзимной пудры.',accent:'green'},
  {from:7,to:13,short:'Неделя 2',name:'Проверить комфорт кожи',description:'Продолжай базовый уход. Если хочется, добавь Torriden в отдельные утра; крем — только тонким слоем.',accent:'green'},
@@ -140,34 +401,59 @@ const getSteps=d=>{const r=routineFor(d);return [...r.am,...r.pm].filter(s=>!s.o
 const progressFor=d=>{const list=getSteps(d),ds=state.done[iso(d)]||{};return {total:list.length,done:list.filter(s=>!!ds[s.id]).length,all:list.length>0&&list.every(s=>!!ds[s.id])}};
 const pctFor=d=>{const p=progressFor(d);return p.total?Math.round(p.done/p.total*100):0};
 const isToday=d=>iso(d)===iso(today());
-const header=(descriptor)=>`<header class="topline"><div class="eyebrow"><span class="status-dot"></span> Твой персональный календарь ухода <span style="opacity:.45">/</span> ${esc(descriptor)}</div><div class="top-actions"><button class="mini-btn" data-action="today">${svg('day','tiny')} <span class="desktop-label">Сегодня</span></button><button class="mini-btn icononly" data-action="settings" aria-label="Настройки">${svg('gear')}</button></div></header>`;
+
+const journalFields=[{key:'oil',label:'Жирность',hint:'0 — нет блеска, 5 — очень выраженная'},{key:'tight',label:'Стянутость',hint:'0 — нет, 5 — сильно выраженная'},{key:'red',label:'Покраснение',hint:'0 — нет, 5 — выраженное'},{key:'irritation',label:'Жжение или раздражение',hint:'0 — нет, 5 — сильное'},{key:'comfort',label:'Комфорт кожи',hint:'0 — некомфортно, 5 — комфортно'}];
+const safeMetric=n=>Math.max(0,Math.min(5,Number.isFinite(Number(n))?Math.round(Number(n)):0));
+const dayEntry=d=>state.journal[iso(d)]||null;
+const simpleMode=d=>!!state.minimalDays[iso(d)];
+const applyTheme=()=>{const t=state.theme==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):state.theme;document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',t==='dark'?'#151c18':'#f6f7f4')};
+applyTheme();
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(state.theme==='system')applyTheme()})}catch(e){}
+const showCheckin=d=>{const entry=dayEntry(d)||{};const markup=journalFields.map(f=>`<div class="form-line"><label for="field-${f.key}">${f.label} <output id="value-${f.key}">${entry[f.key]===undefined?'0':safeMetric(entry[f.key])}/5</output></label><input id="field-${f.key}" type="range" data-range="${f.key}" min="0" max="5" step="1" value="${entry[f.key]===undefined?'0':safeMetric(entry[f.key])}"><div class="field-hint">${f.hint}</div></div>`).join('');showModal(`<div class="eyebrow2">Дневник кожи</div><h2 id="modal-title">Как кожа сегодня?</h2><p class="lead">${esc(fullDate(d))}. Это субъективные наблюдения, не медицинская диагностика.</p><div class="journal-form" data-journal-date="${iso(d)}">${markup}<div class="form-line"><label for="field-breakouts">Новые воспаления <output id="value-breakouts">${Math.max(0,Math.min(20,Number(entry.breakouts)||0))}</output></label><input id="field-breakouts" type="range" data-range="breakouts" min="0" max="20" step="1" value="${Math.max(0,Math.min(20,Number(entry.breakouts)||0))}"></div><label class="settings-label" for="field-notes">Заметки (необязательно)</label><textarea class="notes-area" id="field-notes" maxlength="350" placeholder="Например: после крема меньше блеска…">${esc(entry.notes||'')}</textarea><p class="field-hint">Запись сохраняется только на этом устройстве.</p><div class="modal-actions"><button class="modal-action" data-action="save-checkin" data-jdate="${iso(d)}">Сохранить наблюдение</button><button class="modal-action secondary" data-action="close">Отмена</button></div></div>`)};
+function journalShort(d){const e=dayEntry(d);return `<section class="card journal-summary"><div class="section-top"><h3>Состояние кожи</h3><button data-view="journal">Дневник →</button></div>${e?`<div class="journal-block"><div class="metric-row"><span class="metric-label">Жирность</span><b class="metric-num">${safeMetric(e.oil)}/5</b></div><div class="metric-row"><span class="metric-label">Стянутость</span><b class="metric-num">${safeMetric(e.tight)}/5</b></div><div class="metric-row"><span class="metric-label">Комфорт</span><b class="metric-num">${safeMetric(e.comfort)}/5</b></div></div>`:`<p style="margin-top:12px">Отмечай ощущения — так будет проще понять, влияет ли количество крема на жирность.</p>`}<button class="quiet-action" data-checkin="${iso(d)}">${e?'Изменить запись':'Записать состояние кожи'} ${svg('chevron','tiny')}</button></section>`}
+function journalPlot(entries){const W=620,H=224,px=34,py=23,innerW=W-60,innerH=H-62;let grid='';for(let i=0;i<=5;i++){const yy=py+innerH-i/5*innerH;grid+=`<line x1="${px}" x2="${px+innerW}" y1="${yy}" y2="${yy}" stroke="var(--line)" stroke-width="1"/><text x="9" y="${yy+4}" font-size="11" fill="var(--muted)">${i}</text>`}if(!entries.length)return `<div class="journal-empty">Записей пока нет. После первого check-in здесь появятся измерения за последние 30 дней.</div>`;const points=entries.map(([dt,e])=>{const shift=diffDays(parse(dt),addDays(today(),-29));return{x:px+shift/29*innerW,y:py+innerH-safeMetric(e.oil)/5*innerH,d:dt,e}});const path=points.map((p,i)=>`${i?'L':'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');return `<svg class="chart-svg" role="img" aria-label="График субъективной жирности кожи за последние 30 дней" viewBox="0 0 ${W} ${H}">${grid}<path d="${path}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>${points.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="var(--paper)" stroke="var(--green)" stroke-width="2.2"><title>${p.d}: ${safeMetric(p.e.oil)}/5</title></circle>`).join('')}<text x="${px}" y="${H-9}" fill="var(--muted)" font-size="11">30 дней назад</text><text x="${px+innerW}" y="${H-9}" text-anchor="end" fill="var(--muted)" font-size="11">Сегодня</text></svg>`}
+function journalView(){const entries=Object.entries(state.journal).filter(([dt,v])=>dateValid(dt)&&v&&diffDays(today(),parse(dt))>=0&&diffDays(today(),parse(dt))<=29).sort((a,b)=>a[0].localeCompare(b[0]));const len=entries.length;const avg=k=>len?(entries.reduce((t,[_,e])=>t+safeMetric(e[k]),0)/len).toFixed(1):'—';const recent=Object.entries(state.journal).filter(([dt])=>dateValid(dt)).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,10);const high=entries.some(([d,e])=>safeMetric(e.irritation)>=3);return `<section class="view-section">${header('Дневник')}${hero('Наблюдай. Не угадывай.','Дневник кожи','Ощущения и изменения, которые ты отмечаешь сам. Всё хранится локально.')}
+<div class="micro-actions"><div class="left"><button class="quiet-action active" data-checkin="${iso(state.selected)}">${svg('pen','tiny')} Записать: ${fmt(state.selected)}</button><button class="quiet-action" data-view="day">К уходу на день →</button></div><span class="micro-caption">Нет оценок — нет выдуманных графиков</span></div>
+${high?`<div class="simple-alert">В записях есть раздражение от 3/5. Не повышай частоту Скинорена без оценки переносимости. При выраженной реакции прекрати применение и обратись к врачу.</div>`:''}
+<div class="journal-grid"><div class="stack"><section class="card journal-card"><div class="chart-head"><div><h2>Жирность кожи</h2><p>По твоим записям за последние 30 дней · шкала 0–5</p></div><span class="chart-key">Жирность</span></div>${journalPlot(entries)}</section><section class="card journal-card"><div class="chart-head"><div><h2>Последние записи</h2><p>Нажми на дату, чтобы изменить наблюдение.</p></div></div>${recent.length?`<div class="journal-log">${recent.map(([d,e])=>`<button data-checkin="${d}"><span><span class="d">${esc(fullDate(parse(d)))}</span><span class="m">Жирность ${safeMetric(e.oil)}/5 · Стянутость ${safeMetric(e.tight)}/5 · Комфорт ${safeMetric(e.comfort)}/5</span></span>${svg('chevron','tiny')}</button>`).join('')}</div>`:'<div class="journal-empty">Здесь появятся записи после первого наблюдения.</div>'}</section></div>
+<div class="stack"><section class="card journal-card"><div class="chart-head"><div><h2>Последние 30 дней</h2><p>Наблюдения без медицинской интерпретации.</p></div></div><div class="stat-grid"><div class="stat"><strong>${len}</strong><small>дней с записями</small></div><div class="stat"><strong>${avg('oil')}</strong><small>жирность / 5</small></div><div class="stat"><strong>${avg('comfort')}</strong><small>комфорт / 5</small></div></div><div class="wellness-bars">${journalFields.map(f=>`<div class="wellness-row"><span>${f.label}</span><b>${avg(f.key)}${len?'/5':''}</b><div class="meter"><i style="width:${len?Number(avg(f.key))*20:0}%"></i></div></div>`).join('')}</div></section><section class="card journal-card"><h2 style="font-size:16px;margin:0 0 10px">Что отслеживать?</h2><p class="mode-note">Записывай состояние кожи примерно в одно и то же время. Так будет легче сравнивать реакцию после очищения, крема и Скинорена.</p><p class="mode-note" style="margin-top:12px">Отдельный плохой день не означает, что средство не подходит. Обращай внимание на повторяющиеся реакции.</p></section></div></div></section>`}
+
+const header=(descriptor)=>`<header class="topline"><div class="eyebrow"><span class="status-dot"></span> ritual. <span class="test-ribbon">Тест 1.1 · исправлено</span> <span style="opacity:.45">/</span> ${esc(descriptor)}</div><div class="top-actions"><button class="mini-btn" data-action="today">${svg('day','tiny')} <span class="desktop-label">Сегодня</span></button><button class="mini-btn icononly" data-action="settings" aria-label="Настройки">${svg('gear')}</button></div></header>`;
 const hero=(over,title,sub,stage)=>`<section class="page-hero"><div><div class="eyebrow2">${esc(over)}</div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div>${stage?`<span class="phase-chip ${stage.accent==='purple'?'purple':''}">${svg('leaf','tiny')}${esc(stage.short)}</span>`:''}</section>`;
 const navAdjacent=(type)=>`<div class="toolbar-buttons"><button class="mini-btn icononly" data-move="-1" data-move-type="${type}" aria-label="Предыдущий период">${svg('left')}</button><button class="mini-btn icononly" data-move="1" data-move-type="${type}" aria-label="Следующий период">${svg('chevron')}</button></div>`;
 function renderDayStrip(){const mon=monday(state.selected);let out='<div class="card day-strip" aria-label="Дни недели">';for(let i=0;i<7;i++){const d=addDays(mon,i),sel=iso(d)===iso(state.selected);out+=`<button class="day-tile ${sel?'selected':''} ${isToday(d)?'today':''}" data-date="${iso(d)}" aria-label="${esc(fullDate(d))}" aria-current="${sel?'date':'false'}"><span class="wd">${wdShort[i]}</span><span class="dn">${d.getDate()}</span><span class="tiny-dot ${treatmentDay(d)?'skin':''}"></span></button>`}return out+'</div>'}
-function stepRows(items,d){const done=state.done[iso(d)]||{};return `<div class="steps">${items.map((s,i)=>{const p=PRODUCTS[s.key],checked=!!done[s.id];return `<div class="step ${checked?'completed':''}"><div class="stepnum">${String(i+1).padStart(2,'0')}</div><div class="step-details"><button class="step-open" data-product="${s.key}" title="Подробнее о средстве"><span class="prod-name">${esc(p.name)} ${s.key==='skinoren'?'<span class="tag skin">Лечение</span>':''}${s.optional?'<span class="tag opt">по желанию</span>':''}</span><span class="prod-short">${esc(s.desc)} · Подробнее ↗</span></button></div><button class="done-check ${checked?'checked':''} ${s.optional?'optional':''}" data-check="${s.id}" aria-label="${checked?'Отменить':'Отметить'}: ${esc(p.name)}" aria-pressed="${checked}">${svg('check','tiny')}</button></div>`}).join('')}</div>`}
+function stepRows(items,d){const done=state.done[iso(d)]||{};return `<div class="steps">${items.map((s,i)=>{const p=PRODUCTS[s.key],checked=!!done[s.id];return `<div class="step ${checked?'completed':''}"><div class="stepnum">${String(i+1).padStart(2,'0')}</div>${s.key==='water'?'<span class="product-ico water-mark" aria-label="Вода">H₂O</span>':productImage(s.key,'step')}<div class="step-details"><button class="step-open" data-product="${s.key}" title="Подробнее о средстве"><span class="prod-name">${esc(p.name)} ${s.key==='skinoren'?'<span class="tag skin">Лечение</span>':''}${s.optional?'<span class="tag opt">по желанию</span>':''}</span><span class="prod-short">${esc(s.desc)} · Подробнее ↗</span></button></div><button class="done-check ${checked?'checked':''} ${s.optional?'optional':''}" data-check="${s.id}" aria-label="${checked?'Отменить':'Отметить'}: ${esc(p.name)}" aria-pressed="${checked}">${svg('check','tiny')}</button></div>`}).join('')}</div>`}
 function routineCard(kind,title,sub,items,d,note){const count=items.filter(s=>!s.optional);const done=state.done[iso(d)]||{};const c=count.filter(s=>done[s.id]).length;return `<section class="card routine"><div class="routine-header"><div class="routine-title"><span class="routine-emblem ${kind==='pm'?'night':''}">${svg(kind==='am'?'sun':'moon')}</span><div><h3>${title}</h3><small>${sub}</small></div></div><span class="routine-pct">${c} / ${count.length}</span></div>${stepRows(items,d)}${note?`<div class="routine-foot">${svg('info','tiny')}<span>${esc(note)}</span></div>`:''}</section>`}
 function approvalBanner(d){const n=idxFor(d);if(n<14)return '';let a=null;if(!state.approved.start)a=approvals[0];else if(n>=21&&!state.approved.three)a=approvals[1];else if(n>=28&&!state.approved.alternate)a=approvals[2];else if(n>=42&&!state.approved.daily)a=approvals[3];if(!a)return '';const canApprove=approvalNeeded.indexOf(a.key)===0||state.approved[approvalNeeded[approvalNeeded.indexOf(a.key)-1]];return `<div class="notice warm">${svg('info')}<div><strong>Следующий этап только после подтверждения</strong><br>${esc(a.note)}<br>${canApprove?`<button data-approve="${a.key}">Подтвердить: ${esc(a.name)} →</button>`:'Сначала подтвердите предыдущий этап в разделе «Этапы».'}</div></div>`}
-function dayView(){const d=state.selected,n=idxFor(d),st=stageFor(d),r=routineFor(d),p=progressFor(d);return `<section class="view-section">${header('День')}${hero('Твой уход сегодня',isToday(d)?'Сегодня — время для себя':fullDate(d),`День ${Math.max(1,n+1)} программы · ${d.getFullYear()} год`,st)}${renderDayStrip()}${approvalBanner(d)}${n<0?`<div class="notice warm">${svg('info')}<div>${esc(r.note)} <button data-action="settings">Настроить дату старта</button></div></div>`:`<div class="dashboard-grid"><div class="stack"><section class="card overview"><div><h2>Ритуал на день</h2><p>${p.done===p.total?'Отлично! Все обязательные шаги отмечены.':`Выполнено ${p.done} из ${p.total} обязательных шагов.`}<br>Необязательные средства не учитываются в прогрессе.</p></div><div class="progress-circle" style="--pct:${pctFor(d)}%"><b>${pctFor(d)}%</b></div></section>${routineCard('am','Утренний уход','Подготовка кожи и SPF',r.am,d,'Твой SPF — основной утренний шаг. С кремом не перебарщивай.')}${routineCard('pm','Вечерний уход',r.treatment?'Сегодня лечение азелаиновой кислотой':'Восстановление и комфорт',r.pm,d,r.note)}</div><div class="stack"><section class="card sidecard"><div class="section-top"><h3>Текущий этап</h3><button data-view="plan">Вся программа →</button></div><div class="stage-big">${esc(st.short)}</div><div class="stage-caption">${esc(st.name)}</div><div class="stage-bar"><div style="width:${Math.min(100,Math.round(((n-st.from+1)/(st.to-st.from+1))*100))}%"></div></div><div class="stage-advice">${esc(st.description)}</div></section><section class="card sidecard"><div class="section-top"><h3>Средства на сегодня</h3><button data-view="products">Все средства →</button></div><p class="hint-text">Нажми на средство, чтобы увидеть количество, порядок нанесения и ограничения.</p>${[...new Set([...r.am,...r.pm].map(s=>s.key))].filter(k=>k!=='water').map(k=>{const pr=PRODUCTS[k];return `<button class="product-mini" data-product="${k}"><span class="product-ico ${pr.tone==='violet'?'violet':pr.tone==='blue'?'blue':''}">${esc(pr.abbr)}</span><span><h4>${esc(pr.name)}</h4><p>${esc(pr.short)}</p></span>${svg('chevron','tiny')}</button>`}).join('')}</section><section class="card tip-card"><div class="tip-label">Деликатный уход</div><h4>Не больше средств.<br>А лучше — меньше.</h4><p>Не ориентируйся только на жирный блеск. Стянутость после умывания и ощущение плёнки после крема важнее, чем попытка сделать кожу идеально матовой.</p></section></div></div>`}</section>`}
+function dayView(){const d=state.selected,n=idxFor(d),st=stageFor(d),r=routineFor(d),p=progressFor(d);return `<section class="view-section">${header('День')}${hero('Твой уход сегодня',isToday(d)?'Сегодня — время для себя':fullDate(d),`День ${Math.max(1,n+1)} программы · ${d.getFullYear()} год`,st)}${renderDayStrip()}<div class="micro-actions"><div class="left"><button class="quiet-action ${simpleMode(d)?'active':''}" data-minimal-toggle="${iso(d)}">${svg('simplify','tiny')} ${simpleMode(d)?'Обычный уход':'Минимальный уход'}</button><button class="quiet-action" data-checkin="${iso(d)}">${svg('pen','tiny')} ${dayEntry(d)?'Изменить запись':'Как чувствует себя кожа?'}</button></div><span class="micro-caption">День ${Math.max(1,n+1)} · ${esc(st.short)}</span></div>${approvalBanner(d)}${dayEntry(d)&&safeMetric(dayEntry(d).irritation)>=3?'<div class="simple-alert">Ты отметил заметное раздражение. Не увеличивай частоту Скинорена; при выраженном жжении или стойкой красноте прекрати использование и обратись к врачу.</div>':''}${n<0?`<div class="notice warm">${svg('info')}<div>${esc(r.note)} <button data-action="settings">Настроить дату старта</button></div></div>`:`<div class="dashboard-grid"><div class="stack"><section class="card overview"><div><h2>Ритуал на день</h2><p>${p.done===p.total?'Отлично! Все обязательные шаги отмечены.':`Выполнено ${p.done} из ${p.total} обязательных шагов.`}<br>Необязательные средства не учитываются в прогрессе.</p></div><div class="progress-circle" style="--pct:${pctFor(d)}%"><b>${pctFor(d)}%</b></div></section>${routineCard('am','Утренний уход','Подготовка кожи и SPF',simpleMode(d)?r.am.filter(s=>!s.optional):r.am,d,'Твой SPF — основной утренний шаг. С кремом не перебарщивай.')}${routineCard('pm','Вечерний уход',r.treatment?'Сегодня лечение азелаиновой кислотой':'Восстановление и комфорт',simpleMode(d)?r.pm.filter(s=>!s.optional):r.pm,d,simpleMode(d)?'Минимальный режим скрывает необязательные средства. SPF, очищение и Скинорен по подтверждённому плану остаются на месте.':r.note)}</div><div class="stack">${journalShort(d)}<section class="card sidecard"><div class="section-top"><h3>Текущий этап</h3><button data-view="plan">Вся программа →</button></div><div class="stage-big">${esc(st.short)}</div><div class="stage-caption">${esc(st.name)}</div><div class="stage-bar"><div style="width:${Math.min(100,Math.round(((n-st.from+1)/(st.to-st.from+1))*100))}%"></div></div><div class="stage-advice">${esc(st.description)}</div></section><section class="card sidecard"><div class="section-top"><h3>Средства на сегодня</h3><button data-view="products">Все средства →</button></div><p class="hint-text">Нажми на средство, чтобы увидеть количество, порядок нанесения и ограничения.</p>${[...new Set([...r.am,...r.pm].map(s=>s.key))].filter(k=>k!=='water').map(k=>{const pr=PRODUCTS[k];return `<button class="product-mini" data-product="${k}">${productImage(k,'small')}<span><h4>${esc(pr.name)}</h4><p>${esc(pr.short)}</p></span>${svg('chevron','tiny')}</button>`}).join('')}</section><section class="card tip-card"><div class="tip-label">Деликатный уход</div><h4>Не больше средств.<br>А лучше — меньше.</h4><p>Не ориентируйся только на жирный блеск. Стянутость после умывания и ощущение плёнки после крема важнее, чем попытка сделать кожу идеально матовой.</p></section></div></div>`}</section>`}
 function moveMonth(d,n){return new Date(d.getFullYear(),d.getMonth()+n,1)}
 function weekView(){const mon=monday(state.selected),start=addDays(mon,6);let cards='';for(let i=0;i<7;i++){const d=addDays(mon,i),r=routineFor(d),p=progressFor(d),t=r.treatment;cards+=`<button class="week-day ${iso(d)===iso(state.selected)?'selected':''}" data-date="${iso(d)}" data-go-day="1"><div><div class="kicker">${wdShort[i]}</div><div class="date ${isToday(d)?'today-date':''}">${d.getDate()}</div></div><div class="week-line"><div class="week-label">Утро</div><div class="week-info">Вода · SPF</div><div class="week-label">Вечер</div><div class="week-info ${t?'purple':''}">${t?'Скинорен 15%':idxFor(d)<0?'До старта':'Базовый уход'}</div></div><div class="week-progress"><b style="width:${pctFor(d)}%"></b></div></button>`}
 return `<section class="view-section">${header('Неделя')}${hero('Обзор недели','Всё под контролем','Смотри, какие дни лечебные, а какие — восстановительные.',stageFor(state.selected))}<div class="toolbar"><h2>${fmt(mon)} — ${fmt(start)}</h2>${navAdjacent('week')}</div><div class="week-grid">${cards}</div><div class="small-note">Оттенок фиолетового отмечает дни со Скинореном. Если следующий этап не подтверждён, календарь сохраняет более щадящий режим. Нажми на день, чтобы открыть полную инструкцию.</div></section>`}
-function monthView(){const d=state.selected,first=new Date(d.getFullYear(),d.getMonth(),1),num=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();let cells='';for(let i=0;i<dow(first);i++)cells+='<span class="cal-day blank"></span>';for(let i=1;i<=num;i++){const t=new Date(d.getFullYear(),d.getMonth(),i),p=progressFor(t),n=idxFor(t);cells+=`<button data-date="${iso(t)}" data-go-day="1" class="cal-day ${isToday(t)?'current':''} ${iso(t)===iso(d)?'selected':''} ${t<today()?'in-past':''}"><span class="num">${i}</span><span class="sub">${n>=0?stageFor(t).short:'До старта'}</span><span class="status">${n>=0?`<i class="dot ${treatmentDay(t)?'purple':'green'}"></i>`:''}${p.all?'<span class="done-mini">✓ готово</span>':''}</span></button>`}return `<section class="view-section">${header('Месяц')}${hero('Твой календарь','Месяц за месяцем','Выбери дату, чтобы увидеть подробный уход и отметить выполненные шаги.',stageFor(d))}<div class="toolbar"><h2>${monthNames[d.getMonth()]} ${d.getFullYear()}</h2>${navAdjacent('month')}</div><div class="card calendar"><div class="calendar-weekdays">${wdShort.map(x=>`<span>${x}</span>`).join('')}</div><div class="month-grid">${cells}</div></div><div class="small-note">● Зелёный — базовый уход; ● фиолетовый — вечер со Скинореном; ✓ — обязательные шаги отмечены. Изменение частоты применения требует твоего подтверждения.</div></section>`}
+function monthView(){const d=state.selected,first=new Date(d.getFullYear(),d.getMonth(),1),num=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();let cells='';for(let i=0;i<dow(first);i++)cells+='<span class="cal-day blank"></span>';for(let i=1;i<=num;i++){const t=new Date(d.getFullYear(),d.getMonth(),i),p=progressFor(t),n=idxFor(t);cells+=`<button data-date="${iso(t)}" data-go-day="1" class="cal-day ${isToday(t)?'current':''} ${iso(t)===iso(d)?'selected':''} ${t<today()?'in-past':''}"><span class="num">${i}</span><span class="sub">${n>=0?stageFor(t).short:'До старта'}</span><span class="status">${n>=0?`<i class="dot ${treatmentDay(t)?'purple':'green'}"></i>`:''}${p.all?'<span class="done-mini">✓ готово</span>':''}</span></button>`}return `<section class="view-section">${header('Месяц')}${hero('Твой календарь','Месяц за месяцем','Выбери дату, чтобы увидеть подробный уход и отметить выполненные шаги.',stageFor(d))}<div class="toolbar"><h2>${monthNames[d.getMonth()]} ${d.getFullYear()}</h2><button class="mini-btn" data-view="year">Год</button>${navAdjacent('month')}</div><div class="card calendar"><div class="calendar-weekdays">${wdShort.map(x=>`<span>${x}</span>`).join('')}</div><div class="month-grid">${cells}</div></div><div class="small-note">● Зелёный — базовый уход; ● фиолетовый — вечер со Скинореном; ✓ — обязательные шаги отмечены. Изменение частоты применения требует твоего подтверждения.</div></section>`}
 function miniMonth(year,month){const first=new Date(year,month,1),n=new Date(year,month+1,0).getDate();let cells='';for(let i=0;i<dow(first);i++)cells+='<span></span>';for(let i=1;i<=n;i++){const d=new Date(year,month,i);const prog=progressFor(d);cells+=`<span class="${prog.all?'done':treatmentDay(d)?'purple':''} ${isToday(d)?'today':''} ${idxFor(d)<0?'inactive':''}">${i}</span>`}return `<button class="mini-month" data-month="${month}" data-year="${year}"><h3>${monthNames[month]}</h3><div class="mini-dow">${wdShort.map(x=>`<span>${x.slice(0,1)}</span>`).join('')}</div><div class="mini-days">${cells}</div></button>`}
 function yearView(){const y=state.selected.getFullYear();return `<section class="view-section">${header('Год')}${hero('Большая картина',String(y),'Все двенадцать месяцев. Чтобы открыть месяц, просто нажми на него.')}<div class="toolbar"><h2>${y} год</h2>${navAdjacent('year')}</div><p class="year-desc">Лечебные дни выделены сиреневым, полностью отмеченные — зелёным. Все данные остаются на этом устройстве.</p><div class="year-grid">${Array.from({length:12},(_,m)=>miniMonth(y,m)).join('')}</div></section>`}
 function stageCard(s){const active=idxFor(state.selected)>=s.from&&idxFor(state.selected)<=s.to,n=idxFor(today());const app=s.approval?approvals.find(x=>x.key===s.approval):null,locked=app&&!state.approved[app.key],prev=app&&approvalNeeded.indexOf(app.key)>0?approvalNeeded[approvalNeeded.indexOf(app.key)-1]:null,can=app&&n>=s.from&&(!prev||state.approved[prev]);return `<section class="card phase-card ${active?'active':''}"><div class="phase-heading"><span class="phase-weeks">${esc(s.short)}</span><span class="phase-status">${active?'● Текущий этап':n>s.to?'Пройден по календарю':'Впереди'}</span></div><h3>${esc(s.name)}</h3><p>${esc(s.description)}</p>${app?`<button class="phase-approval ${locked?'':'approved'}" data-approve="${app.key}" ${can?'':'disabled'}>${locked?'○ Подтвердить переносимость':'✓ Переход подтверждён'}</button>`:''}</section>`}
 function planView(){return `<section class="view-section">${header('Этапы')}${hero('Постепенно. Без спешки.','Программа ухода','12 недель с контролируемым введением Скинорена и возможностью не увеличивать частоту.')}${approvalBanner(today())}<div class="phases">${stages.map(stageCard).join('')}</div><div class="small-note"><strong>Важно:</strong> предложенное медленное введение — осторожный план с учётом твоей стянутости и прошлой реакции на кислоты, а не замена официальной инструкции к лекарству. Стандартная схема Скинорена 15% обычно предполагает два нанесения в сутки; согласуй индивидуальный режим с дерматологом. При узлах, болезненных глубоких воспалениях или формировании рубчиков нужна очная оценка.</div></section>`}
-function productsView(){return `<section class="view-section">${header('Мои средства')}${hero('Вся косметичка','Мои средства','Нажми на любую карточку, чтобы узнать, сколько наносить, когда и на какую кожу.')}<div class="catalog">${Object.entries(PRODUCTS).filter(([k])=>k!=='water').map(([k,p])=>`<button class="catalog-btn" data-product="${k}"><span class="product-ico ${p.tone==='violet'?'violet':p.tone==='blue'?'blue':''}">${esc(p.abbr)}</span><span><h3>${esc(p.name)}</h3><p>${esc(p.short)}</p><span class="status ${['enzyme','toner'].includes(k)?'paused':''}">${esc(p.status)} →</span></span></button>`).join('')}</div><div class="small-note">Средства Aronyx и By Wishtrend оставлены в каталоге, но намеренно не добавлены в ежедневный план. Для Aronyx нужно уточнить состав, а дополнительное отшелушивание лучше отложить.</div></section>`}
-function render(){document.querySelectorAll('[data-view]').forEach(b=>{const yes=b.dataset.view===state.view;b.classList.toggle('active',yes);if(yes)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const root=document.getElementById('main-content');root.innerHTML=({day:dayView,week:weekView,month:monthView,year:yearView,plan:planView,products:productsView})[state.view]();document.title=`ritual. · ${state.view==='day'?fullDate(state.selected):'мой уход'}`;save()}
-function showProduct(id){const p=PRODUCTS[id];if(!p)return;showModal(`<span class="product-ico ${p.tone==='violet'?'violet':p.tone==='blue'?'blue':''}">${esc(p.abbr)}</span><h2 id="modal-title">${esc(p.name)}</h2><p class="lead">${esc(p.desc)}</p><div class="info-grid"><div class="info-tile"><b>Сколько</b><span>${esc(p.amount)}</span></div><div class="info-tile"><b>На какую кожу</b><span>${esc(p.skin)}</span></div><div class="info-tile"><b>Категория</b><span>${esc(p.group)}</span></div><div class="info-tile"><b>Режим</b><span>${esc(p.status)}</span></div></div><h3 class="modal-sub">Как правильно использовать</h3><ol>${p.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol><p class="warning"><strong>Обрати внимание.</strong> ${esc(p.caution)}</p>`)}
+function productsView(){return `<section class="view-section">${header('Мои средства')}${hero('Вся косметичка','Мои средства','Нажми на любую карточку, чтобы узнать, сколько наносить, когда и на какую кожу.')}<div class="catalog">${Object.entries(PRODUCTS).filter(([k])=>k!=='water').map(([k,p])=>`<button class="catalog-btn" data-product="${k}">${productImage(k,'catalog')}<span><h3>${esc(p.name)}</h3><p>${esc(p.short)}</p><span class="status ${['enzyme','toner'].includes(k)?'paused':''}">${esc(state.stock[k]==='empty'?'Закончилось':state.stock[k]==='paused'?'Пауза':p.status)} →</span></span></button>`).join('')}</div><div class="small-note">Средства Aronyx и By Wishtrend оставлены в каталоге, но намеренно не добавлены в ежедневный план. Для Aronyx нужно уточнить состав, а дополнительное отшелушивание лучше отложить.</div></section>`}
+function render(){document.querySelectorAll('[data-view]').forEach(b=>{const yes=b.dataset.view===state.view;b.classList.toggle('active',yes);if(yes)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const root=document.getElementById('main-content');root.innerHTML=({day:dayView,week:weekView,month:monthView,year:yearView,plan:planView,products:productsView,journal:journalView})[state.view]();document.title=`ritual. · ${state.view==='day'?fullDate(state.selected):'мой уход'}`;save()}
+
+const compatibility={skinoren:['Допустимо: мягкая пенка DOKDO, увлажняющий крем, ежедневный SPF.','В первые недели лучше разделить с Axis-Y и Torriden, чтобы отслеживать реакцию.','Не добавляй в тот же вечер энзимную пудру, BHA и кислотные пилинги.'],cream:['Совместим со Скинореном после его впитывания.','Если появляется жирная плёнка, уменьши количество; салициловая кислота не устранит плёнку крема.'],enzyme:['Пока пауза на период привыкания к Скинорену.','При возвращении используй вместо пенки и в отдельный вечер.'],toner:['Нельзя подтвердить совместимость без полного состава Aronyx.'],sunscreen:['Последний шаг утра. Не сокращай дозу ради матовости.'],axis:['Не запрещён со Скинореном химически, но на старте проще использовать в разные вечера.']};
+const productTabUI=(id,tab='overview')=>{const p=PRODUCTS[id];if(!p)return'';const stock=state.stock[id]||'have';const tabs=[['overview','Обзор'],['usage','Нанесение'],['compat','Совместимость']];let content=tab==='overview'?`<div class="info-grid"><div class="info-tile"><b>Количество</b><span>${esc(p.amount)}</span></div><div class="info-tile"><b>На какую кожу</b><span>${esc(p.skin)}</span></div><div class="info-tile"><b>Категория</b><span>${esc(p.group)}</span></div><div class="info-tile"><b>Режим</b><span>${esc(p.status)}</span></div></div><p class="mode-note">${esc(p.desc)}</p>`:tab==='usage'?`<h3 class="modal-sub">Пошаговое нанесение</h3><ol>${p.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`:`<h3 class="modal-sub">Сочетаемость с твоим уходом</h3><ul class="compat-list">${(compatibility[id]||['Средство указано в твоём персональном плане. При раздражении лучше уменьшить количество необязательных этапов.']).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;return `<div class="modal-tabs">${tabs.map(([key,label])=>`<button class="modal-tab ${key===tab?'active':''}" data-product-tab="${key}" data-pid="${id}">${label}</button>`).join('')}</div><div id="product-tab-area">${content}</div><p class="warning"><strong>Важно.</strong> ${esc(p.caution)}</p><div class="settings-label">В косметичке</div><div class="stock-wrap">${[['have','Есть'],['paused','Пауза'],['empty','Закончилось']].map(([k,t])=>`<button data-stock="${k}" data-stock-id="${id}" class="${stock===k?'active':''}">${t}</button>`).join('')}</div>`};
+
+function showProduct(id,tab='overview'){const p=PRODUCTS[id];if(!p)return;showModal(`${productPhotoHero(id)}<h2 id="modal-title">${esc(p.name)}</h2><p class="lead">${esc(p.short)}</p><div id="product-modal-content">${productTabUI(id,tab)}</div>`)}
 function showModal(html){document.getElementById('modal-root').innerHTML=`<div class="modal-backdrop" data-close-backdrop="1"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="close" data-action="close" aria-label="Закрыть">${svg('close')}</button>${html}</div></div>`;document.body.style.overflow='hidden';requestAnimationFrame(()=>document.querySelector('.modal .close')?.focus())}
 function closeModal(){document.getElementById('modal-root').innerHTML='';document.body.style.overflow=''}
-function settings(){showModal(`<h2 id="modal-title">Настройки программы</h2><p class="lead">Настрой дату начала и сохрани дневник. Прогресс хранится только в этом браузере.</p><label class="settings-label" for="start-input">Первый день программы</label><input class="settings-input" type="date" id="start-input" value="${state.startDate}" min="2020-01-01" max="2035-12-31"><p class="setting-help">От этой даты отсчитываются недели 1, 2, 3–4 и следующие этапы. При изменении даты уже отмеченные календарные дни не очищаются.</p><div class="modal-actions"><button class="modal-action" data-action="save-settings">Сохранить дату</button></div><label class="settings-label">Данные</label><div class="modal-actions"><button class="modal-action secondary" data-action="export">${svg('download','tiny')} Скачать копию</button><button class="modal-action secondary" data-action="import">Восстановить из копии</button><input type="file" id="import-file" accept="application/json,.json" style="display:none"></div><p class="setting-help">Резервная копия содержит дату старта, выполненные шаги и подтверждения повышения частоты.</p><div class="modal-actions"><button class="modal-action danger" data-action="reset">Сбросить отметки и подтверждения</button></div><p class="fine-print">Это личный план-напоминание, не медицинская диагностика и не индивидуальное назначение препарата. При выраженном раздражении, болезненных узлах, рубцевании или отсутствии улучшения необходим дерматолог.</p>`)}
+function settings(){showModal(`<h2 id="modal-title">Настройки программы</h2><p class="lead">Настрой дату начала и сохрани дневник. Прогресс хранится только в этом браузере.</p><label class="settings-label" for="start-input">Первый день программы</label><input class="settings-input" type="date" id="start-input" value="${state.startDate}" min="2020-01-01" max="2035-12-31"><p class="setting-help">От этой даты отсчитываются недели 1, 2, 3–4 и следующие этапы. При изменении даты уже отмеченные календарные дни не очищаются.</p><div class="modal-actions"><button class="modal-action" data-action="save-settings">Сохранить дату</button></div><label class="settings-label" for="theme-input">Тема интерфейса</label><select class="theme-select" id="theme-input"><option value="system" ${state.theme==='system'?'selected':''}>Как на устройстве</option><option value="light" ${state.theme==='light'?'selected':''}>Светлая</option><option value="dark" ${state.theme==='dark'?'selected':''}>Тёмная</option></select><div class="modal-actions"><button class="modal-action secondary" data-action="save-theme">Применить тему</button></div><label class="settings-label">Данные</label><div class="modal-actions"><button class="modal-action secondary" data-action="export">${svg('download','tiny')} Скачать копию</button><button class="modal-action secondary" data-action="import">Восстановить из копии</button><input type="file" id="import-file" accept="application/json,.json" style="display:none"></div><p class="setting-help">Резервная копия включает календарь, дневник, выбранную тему, минимальный уход и статусы косметики.</p><div class="modal-actions"><button class="modal-action danger" data-action="reset">Сбросить отметки и подтверждения</button></div><p class="fine-print">Это личный план-напоминание, не медицинская диагностика и не индивидуальное назначение препарата. При выраженном раздражении, болезненных узлах, рубцевании или отсутствии улучшения необходим дерматолог.</p>`)}
 function showApproval(key){const a=approvals.find(x=>x.key===key);if(!a)return;const before=approvalNeeded[approvalNeeded.indexOf(key)-1];if(before&&!state.approved[before])return; if(state.approved[key]){showModal(`<h2 id="modal-title">Этап подтверждён</h2><p class="lead">${esc(a.name)}. Если раздражение усилилось, ты можешь отменить этот и все последующие этапы.</p><div class="modal-actions"><button class="modal-action danger" data-confirm-revoke="${key}">Отменить повышение частоты</button><button class="modal-action secondary" data-action="close">Оставить как есть</button></div>`);return}showModal(`<h2 id="modal-title">${esc(a.name)}</h2><p class="lead">${esc(a.week)}. Этот переход не происходит автоматически: важно, чтобы предыдущий режим хорошо переносился.</p><div class="notice warm" style="margin:0">${svg('info')}<div>${esc(a.note)}<br>При стойком жжении, красноте или шелушении отложи повышение частоты.</div></div><div class="modal-actions"><button class="modal-action" data-confirm-approve="${key}">Да, кожа переносит хорошо</button><button class="modal-action secondary" data-action="close">Пока не готов</button></div>`)}
 function approve(key,on){const i=approvalNeeded.indexOf(key);if(i<0)return;if(on){approvalNeeded.slice(0,i+1).forEach(k=>state.approved[k]=true)}else{approvalNeeded.slice(i).forEach(k=>delete state.approved[k])}save();closeModal();render()}
-function downloadBackup(){const json=JSON.stringify({app:'ritual',version:1,exportedAt:new Date().toISOString(),startDate:state.startDate,done:state.done,approved:state.approved},null,2);const blob=new Blob([json],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`ritual-backup-${iso(today())}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function downloadBackup(){const json=JSON.stringify({app:'ritual',version:2,exportedAt:new Date().toISOString(),startDate:state.startDate,done:state.done,approved:state.approved,journal:state.journal,minimalDays:state.minimalDays,stock:state.stock,theme:state.theme},null,2);const blob=new Blob([json],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`ritual-backup-${iso(today())}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function navigateView(view){state.view=view;closeModal();render();window.scrollTo({top:0,behavior:'instant'})}
 function changeDate(d,toDay=false){state.selected=d;if(toDay)state.view='day';render();window.scrollTo({top:0,behavior:'instant'})}
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b){if(e.target.dataset.closeBackdrop)closeModal();return}if(b.dataset.closeBackdrop)return;
+ if(b.dataset.minimalToggle){const d=b.dataset.minimalToggle;state.minimalDays[d]=!state.minimalDays[d];save();render();return}
+ if(b.dataset.checkin){showCheckin(parse(b.dataset.checkin));return}
+ if(b.dataset.productTab){const area=document.getElementById('product-modal-content');if(area)area.innerHTML=productTabUI(b.dataset.pid,b.dataset.productTab);return}
+ if(b.dataset.stock){state.stock[b.dataset.stockId]=b.dataset.stock;save();render();const area=document.getElementById('product-modal-content');if(area)area.innerHTML=productTabUI(b.dataset.stockId,'overview');return}
  if(b.dataset.view){navigateView(b.dataset.view);return}
  if(b.dataset.product){showProduct(b.dataset.product);return}
  if(b.dataset.check){const id=iso(state.selected);state.done[id]??={};state.done[id][b.dataset.check]=!state.done[id][b.dataset.check];save();render();return}
@@ -177,6 +463,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b){
  if(b.dataset.approve){showApproval(b.dataset.approve);return}
  if(b.dataset.confirmApprove){approve(b.dataset.confirmApprove,true);return}
  if(b.dataset.confirmRevoke){approve(b.dataset.confirmRevoke,false);return}
+ if(b.dataset.action==='save-checkin'){
+  const dt=b.dataset.jdate;if(!dateValid(dt))return;const entry={};for(const f of journalFields){entry[f.key]=safeMetric(document.getElementById('field-'+f.key)?.value)}entry.breakouts=Math.max(0,Math.min(20,Number(document.getElementById('field-breakouts')?.value)||0));entry.notes=document.getElementById('field-notes')?.value.slice(0,350)||'';state.journal[dt]=entry;save();closeModal();render();return}
+ if(b.dataset.action==='save-theme'){const t=document.getElementById('theme-input')?.value;if(['system','light','dark'].includes(t)){state.theme=t;applyTheme();save()}closeModal();render();return}
  if(b.dataset.action==='close'){closeModal();return}
  if(b.dataset.action==='settings'){settings();return}
  if(b.dataset.action==='today'){changeDate(today(),true);return}
@@ -185,10 +474,16 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b){
  if(b.dataset.action==='import'){document.getElementById('import-file')?.click();return}
  if(b.dataset.action==='reset'){if(confirm('Удалить все выполненные шаги и подтверждения этапов? Дата начала сохранится.')){state.done={};state.approved={};save();closeModal();render()}return}
 });
-document.addEventListener('change',async e=>{if(e.target.id==='import-file'&&e.target.files?.[0]){try{const data=JSON.parse(await e.target.files[0].text());if(!dateValid(data.startDate)||!data.done||typeof data.done!=='object'||!data.approved||typeof data.approved!=='object')throw Error('Неверная структура');if(!confirm('Заменить текущий прогресс данными резервной копии?'))return;state.startDate=data.startDate;state.done=data.done;state.approved=data.approved;save();closeModal();render()}catch(e){alert('Не удалось открыть резервную копию: '+e.message)}}});
+document.addEventListener('input',e=>{if(e.target.dataset.range){const o=document.getElementById('value-'+e.target.dataset.range);if(o)o.textContent=e.target.value+(e.target.dataset.range==='breakouts'?'':'/5')}});
+document.addEventListener('change',async e=>{if(e.target.id==='import-file'&&e.target.files?.[0]){try{const data=JSON.parse(await e.target.files[0].text());if(!dateValid(data.startDate)||!data.done||typeof data.done!=='object'||!data.approved||typeof data.approved!=='object')throw Error('Неверный формат');if(!confirm('Импорт заменит записи и подтверждения этапов в тестовой версии. Продолжить?'))return;state.startDate=data.startDate;state.done=data.done;state.approved=data.approved;state.journal=data.journal&&typeof data.journal==='object'?data.journal:{};state.minimalDays=data.minimalDays&&typeof data.minimalDays==='object'?data.minimalDays:{};state.stock=data.stock&&typeof data.stock==='object'?data.stock:{};state.theme=['system','light','dark'].includes(data.theme)?data.theme:'system';applyTheme();save();closeModal();render()}catch(err){alert('Не удалось прочитать резервную копию: '+err.message)}}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();return}if(!document.querySelector('.modal')&&state.view==='day'&&['ArrowLeft','ArrowRight'].includes(e.key)){changeDate(addDays(state.selected,e.key==='ArrowLeft'?-1:1))}});
 render();
-if('serviceWorker' in navigator && /^https?:$/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {}));
+}
 </script>
 </body>
 </html>
